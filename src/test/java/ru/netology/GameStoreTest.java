@@ -32,14 +32,32 @@ public class GameStoreTest {
     public void shouldSumPlayerTime() {
         GameStore store = new GameStore();
         Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
 
         store.addPlayTime(player1.getName(), 1);
-        store.addPlayTime(player1.getName(), 1);
+        store.addPlayTime(player2.getName(), 2);
 
-        int expected = 2;
+        int expected = 3;
         int actual = store.getSumPlayedTime();
 
         assertEquals(expected, actual);
     }
-    // другие ваши тесты
+
+    @Test
+    public void shouldAddPlayerTimeToTime() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
+
+        store.addPlayTime(player1.getName(), 1);
+        store.addPlayTime(player2.getName(), 2);
+        store.addPlayTime(player1.getName(), 3);
+        store.addPlayTime(player2.getName(), 4);
+
+        int expected = 10;
+        int actual = store.getSumPlayedTime();
+
+        assertEquals(expected, actual);
+    }
+
 }
