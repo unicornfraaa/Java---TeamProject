@@ -59,5 +59,20 @@ public class GameStoreTest {
 
         assertEquals(expected, actual);
     }
+    @Test
+    public void equalPlayedTime() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
 
+        store.addPlayTime(player1.getName(), 1);
+        store.addPlayTime(player2.getName(), 1);
+        store.addPlayTime(player1.getName(), 2);
+        store.addPlayTime(player2.getName(), 2);
+
+        String[] expected = {"Petya", "Kirill"};
+        String[] actual = {store.getMostPlayer()};
+
+        assertArrayEquals(expected, actual);
+    }
 }
