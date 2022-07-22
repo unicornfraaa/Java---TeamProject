@@ -56,7 +56,6 @@ public class GameStoreTest {
 
         assertEquals(expected, actual);
     }
-// переписать
 
     @Test
     public void equalPlayedTime() {
