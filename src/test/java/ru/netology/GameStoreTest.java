@@ -13,21 +13,18 @@ public class GameStoreTest {
 
         assertTrue(store.containsGame(game));
     }
-
     @Test
-    public void shouldAddPlayerTime() {
+    void shouldAddPlayerTime() {
         GameStore store = new GameStore();
         Player player1 = new Player("Petya");
-        Player player2 = new Player("Kirill");
+        store.addPlayTime(player1.getName(), 3);
 
-        store.addPlayTime(player1.getName(), 0);
-        store.addPlayTime(player2.getName(), 1);
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Petya"};
 
-        String expected = "Kirill";
-        String actual = store.getMostPlayer();
-
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
+
     @Test
     public void shouldSumPlayerTime() {
         GameStore store = new GameStore();
@@ -59,20 +56,36 @@ public class GameStoreTest {
 
         assertEquals(expected, actual);
     }
+// переписать
+
     @Test
     public void equalPlayedTime() {
         GameStore store = new GameStore();
         Player player1 = new Player("Petya");
         Player player2 = new Player("Kirill");
-
         store.addPlayTime(player1.getName(), 1);
-        store.addPlayTime(player2.getName(), 1);
         store.addPlayTime(player1.getName(), 2);
         store.addPlayTime(player2.getName(), 2);
+        store.addPlayTime(player2.getName(), 1);
 
         String[] expected = {"Petya", "Kirill"};
-        String[] actual = {store.getMostPlayer()};
+        String[] actual = store.getMostPlayer();
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    void shouldAddDuplicated() {
+
+        GameStore store = new GameStore();
+
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = new Game("Нетология Баттл Онлайн", "Аркады", store);
+
+
+        assertThrows(RuntimeException.class, () -> store.publishGame(game2.getTitle(), game2.getGenre()));
+
+    }
 }
+
+
