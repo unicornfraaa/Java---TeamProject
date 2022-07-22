@@ -86,6 +86,18 @@ public class GameStoreTest {
         assertThrows(RuntimeException.class, () -> store.publishGame(game2.getTitle(), game2.getGenre()));
 
     }
+
+    @Test
+    void shouldAddPlayerTimeLessThanOneHour() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
+        store.addPlayTime(player2.getName(), 1);
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Kirill"};
+
+    }
 }
 
 
