@@ -97,6 +97,17 @@ public class GameStoreTest {
         String[] actual = store.getMostPlayer();
         String[] expected = {"Kirill"};
 
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnNullMostPlayer() {
+        GameStore store = new GameStore();
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = null;
+
+        assertEquals(expected, actual);
     }
 }
 
