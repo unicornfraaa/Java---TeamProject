@@ -1,7 +1,6 @@
 package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 public class GameStoreTest {
@@ -14,21 +13,16 @@ public class GameStoreTest {
 
         assertTrue(store.containsGame(game));
     }
-
-    // другие ваши тесты
     @Test
-    public void shouldAddPlayerTime() {
+    void shouldAddPlayerTime() {
         GameStore store = new GameStore();
         Player player1 = new Player("Petya");
-        Player player2 = new Player("Kirill");
+        store.addPlayTime(player1.getName(), 3);
 
-        store.addPlayTime(player1.getName(), 0);
-        store.addPlayTime(player2.getName(), 1);
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Petya"};
 
-        String expected = "Kirill";
-        String actual = store.getMostPlayer();
-
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -68,15 +62,55 @@ public class GameStoreTest {
         GameStore store = new GameStore();
         Player player1 = new Player("Petya");
         Player player2 = new Player("Kirill");
-
         store.addPlayTime(player1.getName(), 1);
-        store.addPlayTime(player2.getName(), 1);
         store.addPlayTime(player1.getName(), 2);
         store.addPlayTime(player2.getName(), 2);
+        store.addPlayTime(player2.getName(), 1);
+
+//        store.addPlayTime("Petya", 3);
+//        store.addPlayTime("Anya", 2);
+//        store.addPlayTime("Katya", 1);
+//        store.addPlayTime("Kirill", 3);
 
         String[] expected = {"Petya", "Kirill"};
-        String[] actual = {store.getMostPlayer()};
+        String[] actual = store.getMostPlayer();
 
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldAddDuplicated() {
+
+        GameStore store = new GameStore();
+
+        Game game1 = store.publishGame("Нетология Баттл Онлайн", "Аркады");
+        Game game2 = new Game("Нетология Баттл Онлайн", "Аркады", store);
+
+
+        assertThrows(RuntimeException.class, () -> store.publishGame(game2.getTitle(), game2.getGenre()));
+
+    }
+
+    @Test
+    void shouldAddPlayerTimeLessThanOneHour() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
+        store.addPlayTime(player2.getName(), 1);
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Kirill"};
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnNullMostPlayer() {
+        GameStore store = new GameStore();
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = null;
+
+        assertEquals(expected, actual);
     }
 }

@@ -38,6 +38,9 @@ public class GameStore {
      */
     public Game publishGame(String title, String genre) {
         Game game = new Game(title, genre, this);
+        if (games.contains(game)) {
+            throw new RuntimeException("Игра " + title + " уже установлена");
+        }
         games.add(game);
         return game;
     }
@@ -72,20 +75,20 @@ public class GameStore {
      * Ищет имя игрока, который играл в игры этого каталога больше всего
      * времени. Если игроков нет, то возвращется null
      */
-    public String [] getMostPlayer() {
+    public String[] getMostPlayer() {
         int mostTime = 0;
         String[] bestPlayers = new String[0];
         for (String playerName : playedTime.keySet()) {
             int playerTime = playedTime.get(playerName);
             if (playerTime > mostTime) {
                 mostTime = playerTime;
-                //bestPlayer = playerName;
             }
-            if (playerTime == 0) {
+        }
+            if (mostTime == 0) {
                 return null;
             } else {
-                for (String playersName : playedTime.keySet()) {
-                    if (playerTime == mostTime) {
+                for (String playerName : playedTime.keySet()) {
+                    if (playedTime.get(playerName) == mostTime) {
                         String[] tmp = new String[bestPlayers.length + 1];
                         System.arraycopy(bestPlayers, 0, tmp, 0, bestPlayers.length);
                         tmp[tmp.length - 1] = playerName;
@@ -93,22 +96,18 @@ public class GameStore {
                     }
                 }
             }
-            //return bestPlayers;
+            return bestPlayers;
         }
-        return bestPlayers;
-    }
 
-
-/**
- * Суммирует общее количество времени всех игроков, проведённого
- * за играми этого каталога
- */
-        public int getSumPlayedTime() {
-            int sum = 0;
-            ArrayList<Integer> hoursToGame = new ArrayList<>(playedTime.values());
-            for (Integer hours : hoursToGame) {
-                sum += hours;
-            }
-            return sum;
+    /**
+     * Суммирует общее количество времени всех игроков, проведённого
+     * за играми этого каталога
+     */
+    public int getSumPlayedTime() {
+        int sum = 0;
+        for (String playerName : playedTime.keySet()) {
+            sum = sum + playedTime.get(playerName);
         }
+        return sum;
     }
+}
