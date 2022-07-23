@@ -108,5 +108,3 @@ public class GameStoreTest {
         assertArrayEquals(null, actual);
     }
 }
-
-
