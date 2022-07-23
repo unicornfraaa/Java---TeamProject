@@ -96,7 +96,7 @@ public class GameStoreTest {
         String[] actual = store.getMostPlayer();
         String[] expected = {"Kirill"};
 
-        assertEquals(expected, actual);
+        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -104,9 +104,8 @@ public class GameStoreTest {
         GameStore store = new GameStore();
 
         String[] actual = store.getMostPlayer();
-        String[] expected = null;
 
-        assertEquals(expected, actual);
+        assertArrayEquals(null, actual);
     }
 }
 
