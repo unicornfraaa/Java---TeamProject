@@ -1,5 +1,6 @@
 package ru.netology;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -172,8 +173,10 @@ public class PlayerTest {
     }
 
     //mostPlayerByGenre: следует вернуть null, если время отрицательное
+    
     @Test
-    public void shouldCheckMostPlayerByGenreWithГnacceptableTime() {
+    public void shouldCheckMostPlayerByGenreWithUnacceptableTime() {
+
         GameStore store = new GameStore();
         Game game1 = store.publishGame("Call of Dute", "Шутер");
         Game game2 = store.publishGame("Apex Legends", "Шутер");
@@ -187,5 +190,4 @@ public class PlayerTest {
 
         assertEquals(expected, actual);
     }
-
 }

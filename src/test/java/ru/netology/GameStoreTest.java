@@ -67,11 +67,6 @@ public class GameStoreTest {
         store.addPlayTime(player2.getName(), 2);
         store.addPlayTime(player2.getName(), 1);
 
-//        store.addPlayTime("Petya", 3);
-//        store.addPlayTime("Anya", 2);
-//        store.addPlayTime("Katya", 1);
-//        store.addPlayTime("Kirill", 3);
-
         String[] expected = {"Petya", "Kirill"};
         String[] actual = store.getMostPlayer();
 
@@ -109,8 +104,7 @@ public class GameStoreTest {
         GameStore store = new GameStore();
 
         String[] actual = store.getMostPlayer();
-        String[] expected = null;
 
-        assertEquals(expected, actual);
+        assertArrayEquals(null, actual);
     }
 }
